@@ -7,7 +7,7 @@ const SectorBubbleChart = ({ filters }) => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/api/insights/sector-risk-analysis", {
+      .get("https://chartanalytics.onrender.com/api/insights/sector-risk-analysis", {
         params: filters,
       })
       .then((res) => {

@@ -7,7 +7,7 @@ const IntensityLineChart = ({ filters }) => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/api/insights/avg-intensity-by-year", {
+      .get("https://chartanalytics.onrender.com/api/insights/avg-intensity-by-year", {
         params: filters,
       })
       .then((res) => {

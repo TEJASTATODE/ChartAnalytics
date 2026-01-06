@@ -19,7 +19,7 @@ const TopicPieChart = ({ filters }) => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/api/insights/count-by-topic", {
+      .get("https://chartanalytics.onrender.com/api/insights/count-by-topic", {
         params: filters,
       })
       .then((res) => {

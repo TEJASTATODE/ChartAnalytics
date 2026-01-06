@@ -6,7 +6,7 @@ const Filters = ({ onChange }) => {
   const [filters, setFilters] = useState({});
 
   useEffect(() => {
-    axios.get("http://localhost:5000/api/insights/filters")
+    axios.get("https://chartanalytics.onrender.com/api/insights/filters")
       .then((res) => setOptions(res.data))
       .catch((err) => console.error(err));
   }, []);

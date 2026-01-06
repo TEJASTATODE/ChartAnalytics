@@ -8,7 +8,7 @@ const CountryBarChart = ({ filters }) => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/api/insights/count-by-country", {
+      .get("https://chartanalytics.onrender.com/api/insights/count-by-country", {
         params: filters,
       })
       .then((res) => {
