@@ -14,7 +14,7 @@ const Dashboard = () => {
       <aside className="sidebar">
         <div style={{ marginBottom: '32px', display: 'flex', alignItems: 'center', gap: '10px' }}>
           <div style={{ width: 10, height: 10, background: 'var(--primary-accent)', borderRadius: '50%', boxShadow: '0 0 15px var(--primary-accent)' }}></div>
-          <span style={{ fontWeight: 800, fontSize: '20px', letterSpacing: '-0.8px' }}>DataLens</span>
+          <span style={{ fontWeight: 800, fontSize: '20px', letterSpacing: '-0.8px' }}>ChartData</span>
         </div>
         <h2>Control Panel</h2>
         <Filters onChange={setFilters} />
@@ -22,7 +22,7 @@ const Dashboard = () => {
 
       <main className="content">
         <header style={{ marginBottom: '32px' }}>
-          <h1>Intelligence Dashboard</h1>
+          <h1>Dashboard</h1>
           <div style={{ display: 'flex', gap: '8px', marginTop: '12px', flexWrap: 'wrap' }}>
             {Object.keys(filters).length === 0 ? (
               <span className="badge">Live Data Stream</span>
