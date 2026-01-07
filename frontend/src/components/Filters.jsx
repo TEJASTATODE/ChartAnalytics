@@ -13,26 +13,49 @@ const Filters = ({ onChange }) => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+    
+
     const updated = { ...filters, [name]: value || undefined };
+    
+
     Object.keys(updated).forEach(k => updated[k] === undefined && delete updated[k]);
+    
     setFilters(updated);
     onChange(updated);
   };
 
   const resetAll = () => {
-    setFilters({});
-    onChange({});
-    document.querySelectorAll('.filter').forEach(el => el.value = "");
+    setFilters({}); 
+    onChange({});  
+    
   };
 
   const FilterBox = ({ name, label, data }) => (
     <div style={{ marginBottom: '14px' }}>
-      <label style={{ fontSize: '10px', color: 'rgba(255,255,255,0.4)', display: 'block', marginBottom: '4px', paddingLeft: '4px' }}>
+      <label style={{ 
+        fontSize: '10px', 
+        color: 'rgba(255,255,255,0.4)', 
+        display: 'block', 
+        marginBottom: '4px', 
+        paddingLeft: '4px',
+        textTransform: 'uppercase',
+        letterSpacing: '1px'
+      }}>
         {label}
       </label>
-      <select name={name} className="filter" onChange={handleChange}>
+      <select 
+        name={name} 
+        className="filter" 
+
+        value={filters[name] || ""} 
+        onChange={handleChange}
+      >
         <option value="">All {label}s</option>
-        {data?.map(item => <option key={item} value={item}>{item}</option>)}
+        {data?.map(item => (
+          <option key={item} value={item} style={{ background: "#1e293b", color: "#fff" }}>
+            {item}
+          </option>
+        ))}
       </select>
     </div>
   );
@@ -49,11 +72,12 @@ const Filters = ({ onChange }) => {
       
       {Object.keys(filters).length > 0 && (
         <button onClick={resetAll} style={{
-          width: '100%', padding: '8px', background: 'rgba(239, 68, 68, 0.1)',
+          width: '100%', padding: '10px', background: 'rgba(239, 68, 68, 0.1)',
           border: '1px solid rgba(239, 68, 68, 0.2)', color: '#f87171',
-          borderRadius: '8px', cursor: 'pointer', fontSize: '12px', fontWeight: '600'
+          borderRadius: '8px', cursor: 'pointer', fontSize: '12px', fontWeight: '700',
+          marginTop: '10px', transition: '0.3s'
         }}>
-          Reset Filters
+          Clear All Filters
         </button>
       )}
     </div>
