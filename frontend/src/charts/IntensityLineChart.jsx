@@ -11,7 +11,7 @@ const IntensityLineChart = ({ filters }) => {
         params: filters,
       })
       .then((res) => {
-        // Sort data by year (id) to ensure the line draws correctly
+   
         const sortedData = res.data.sort((a, b) => a._id - b._id);
         draw(sortedData);
       });
@@ -25,7 +25,6 @@ const IntensityLineChart = ({ filters }) => {
     const height = 280;
     const margin = { top: 30, right: 30, bottom: 40, left: 50 };
 
-    // Scales
     const x = d3
       .scaleLinear()
       .domain(d3.extent(data, (d) => d._id))
@@ -37,14 +36,12 @@ const IntensityLineChart = ({ filters }) => {
       .nice()
       .range([height - margin.bottom, margin.top]);
 
-    // Line generator with Curve for smoothness
     const line = d3
       .line()
       .x((d) => x(d._id))
       .y((d) => y(d.avgIntensity))
-      .curve(d3.curveMonotoneX); // Makes the line smooth
+      .curve(d3.curveMonotoneX);
 
-    // Area generator for the "Glow" under the line
     const area = d3
       .area()
       .x((d) => x(d._id))
@@ -52,10 +49,9 @@ const IntensityLineChart = ({ filters }) => {
       .y1((d) => y(d.avgIntensity))
       .curve(d3.curveMonotoneX);
 
-    // Create Gradients
     const defs = svg.append("defs");
 
-    // Area Gradient
+
     const areaGradient = defs
       .append("linearGradient")
       .attr("id", "area-gradient")
@@ -65,7 +61,7 @@ const IntensityLineChart = ({ filters }) => {
     areaGradient.append("stop").attr("offset", "0%").attr("stop-color", "rgba(99, 102, 241, 0.4)");
     areaGradient.append("stop").attr("offset", "100%").attr("stop-color", "rgba(99, 102, 241, 0)");
 
-    // Axes
+  
     svg
       .append("g")
       .attr("transform", `translate(0,${height - margin.bottom})`)
@@ -82,14 +78,13 @@ const IntensityLineChart = ({ filters }) => {
       .attr("color", "rgba(255,255,255,0.4)")
       .style("font-size", "11px");
 
-    // Draw Area
     svg
       .append("path")
       .datum(data)
       .attr("fill", "url(#area-gradient)")
       .attr("d", area);
 
-    // Draw Line
+
     svg
       .append("path")
       .datum(data)
@@ -99,7 +94,7 @@ const IntensityLineChart = ({ filters }) => {
       .attr("d", line)
       .style("filter", "drop-shadow(0px 0px 8px rgba(99, 102, 241, 0.6))"); // The line glow
 
-    // Add glowing dots on data points
+ 
     svg
       .selectAll(".dot")
       .data(data)

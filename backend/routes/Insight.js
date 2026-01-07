@@ -2,12 +2,7 @@ const express = require("express");
 const router = express.Router();
 const Insight = require("../models/Insight");
 
-/* =====================================================
-   🔹 HELPER: SMART MATCH BUILDER
-   - applies only active filters
-   - ignores grouping field per chart
-   - prevents over-filtering
-===================================================== */
+
 
 const buildMatch = (query, ignore = []) => {
   const match = {};
@@ -29,7 +24,6 @@ const buildMatch = (query, ignore = []) => {
     }
   });
 
-  // ✅ End year treated as RANGE (stable analytics behavior)
   if (query.endYear) {
     match.year = { $lte: Number(query.endYear) };
   }
@@ -37,9 +31,6 @@ const buildMatch = (query, ignore = []) => {
   return match;
 };
 
-/* =====================================================
-   1️⃣ RAW DATA (OPTIONAL / DEBUG)
-===================================================== */
 
 router.get("/", async (req, res) => {
   try {
@@ -50,11 +41,6 @@ router.get("/", async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
-
-/* =====================================================
-   2️⃣ AVG INTENSITY BY YEAR
-   (uses all filters safely)
-===================================================== */
 
 router.get("/avg-intensity-by-year", async (req, res) => {
   try {
@@ -77,10 +63,6 @@ router.get("/avg-intensity-by-year", async (req, res) => {
   }
 });
 
-/* =====================================================
-   3️⃣ COUNT BY COUNTRY
-   (IGNORE country filter itself)
-===================================================== */
 
 router.get("/count-by-country", async (req, res) => {
   try {
@@ -105,10 +87,6 @@ router.get("/count-by-country", async (req, res) => {
   }
 });
 
-/* =====================================================
-   4️⃣ COUNT BY TOPIC
-   (IGNORE topic filter itself)
-===================================================== */
 
 router.get("/count-by-topic", async (req, res) => {
   try {
@@ -132,10 +110,7 @@ router.get("/count-by-topic", async (req, res) => {
   }
 });
 
-/* =====================================================
-   5️⃣ SECTOR RISK ANALYSIS
-   (IGNORE sector filter itself)
-===================================================== */
+
 
 router.get("/sector-risk-analysis", async (req, res) => {
   try {
@@ -161,10 +136,8 @@ router.get("/sector-risk-analysis", async (req, res) => {
   }
 });
 
-/* =====================================================
-   6️⃣ COUNT BY PESTLE
-   (IGNORE pestle filter itself)
-===================================================== */
+
+
 
 router.get("/count-by-pestle", async (req, res) => {
   try {
@@ -187,9 +160,7 @@ router.get("/count-by-pestle", async (req, res) => {
   }
 });
 
-/* =====================================================
-   7️⃣ FILTER OPTIONS (DROPDOWNS)
-===================================================== */
+
 
 router.get("/filters", async (req, res) => {
   try {

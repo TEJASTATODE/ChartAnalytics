@@ -11,7 +11,7 @@ const SectorBubbleChart = ({ filters }) => {
         params: filters,
       })
       .then((res) => {
-        // Clean data: remove entries with missing sector names
+
         const cleanData = res.data.filter(d => d._id);
         draw(cleanData);
       });
@@ -25,7 +25,6 @@ const SectorBubbleChart = ({ filters }) => {
     const height = 300;
     const margin = { top: 30, right: 40, bottom: 50, left: 60 };
 
-    // --- SCALES ---
     const x = d3
       .scaleLinear()
       .domain([0, d3.max(data, (d) => d.avgLikelihood) * 1.1])
@@ -39,9 +38,8 @@ const SectorBubbleChart = ({ filters }) => {
     const r = d3
       .scaleSqrt()
       .domain([0, d3.max(data, (d) => d.avgIntensity)])
-      .range([8, 30]); // Slightly larger for better "glass" look
+      .range([8, 30]);
 
-    // --- DEFS (Gradients & Shadows) ---
     const defs = svg.append("defs");
     const bubbleGradient = defs.append("radialGradient")
       .attr("id", "bubble-grad")
@@ -50,7 +48,7 @@ const SectorBubbleChart = ({ filters }) => {
     bubbleGradient.append("stop").attr("offset", "0%").attr("stop-color", "#a5b4fc");
     bubbleGradient.append("stop").attr("offset", "100%").attr("stop-color", "#6366f1");
 
-    // --- AXES ---
+
     svg.append("g")
       .attr("transform", `translate(0,${height - margin.bottom})`)
       .call(d3.axisBottom(x).ticks(5).tickSize(-height + margin.top + margin.bottom))
@@ -63,13 +61,13 @@ const SectorBubbleChart = ({ filters }) => {
       .attr("color", "rgba(255,255,255,0.05)")
       .selectAll("text").attr("color", "rgba(255,255,255,0.4)").style("font-size", "10px");
 
-    // Axis Labels
+  
     svg.append("text")
       .attr("x", width / 2).attr("y", height - 10)
       .attr("fill", "rgba(255,255,255,0.3)").style("font-size", "10px")
       .style("text-anchor", "middle").text("Likelihood →");
 
-    // --- BUBBLES ---
+  
     const bubbles = svg.selectAll(".bubble-group")
       .data(data)
       .enter()
@@ -92,16 +90,15 @@ const SectorBubbleChart = ({ filters }) => {
         d3.select(this).transition().duration(200).attr("r", r(d.avgIntensity)).style("opacity", 0.8);
       });
 
-    // --- TEXT LABELS (Only for larger bubbles to keep it clean) ---
     bubbles.append("text")
       .attr("x", (d) => x(d.avgLikelihood))
-      .attr("y", (d) => y(d.avgRelevance) + 4) // Center vertically
+      .attr("y", (d) => y(d.avgRelevance) + 4) 
       .attr("fill", "#fff")
       .style("font-size", "9px")
       .style("font-weight", "600")
       .style("text-anchor", "middle")
       .style("pointer-events", "none")
-      .text(d => d.avgIntensity > 20 ? d._id : ""); // Only label significant sectors
+      .text(d => d.avgIntensity > 20 ? d._id : ""); 
   };
 
   return (
